@@ -37,4 +37,13 @@ import { BrnSeparatorComponent } from '@spartan-ng/ui-separator-brain';
 })
 export class AppComponent {
   title = 'login';
+
+  toggleTheme(): void {
+    const htmlElement = document.documentElement;
+    if (document.documentElement.classList?.contains('dark')) {
+      htmlElement.classList.remove('dark');
+      return;
+    }
+    htmlElement.classList.add('dark');
+  }
 }
