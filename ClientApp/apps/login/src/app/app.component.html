@@ -1,11 +1,21 @@
-<section hlmCard class="w-80 absolute top-10 left-10">
-  <div hlmCardHeader>
-    <h3 hlmCardTitle>Card Title</h3>
-    <p hlmCardDescription>Card Description</p>
-  </div>
-  <p hlmCardContent>Card Content</p>
-  `
-  <p hlmCardFooter>Card Footer</p>
+<div
+  class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+>
+  <section hlmCard class="flex flex-col items-center gap-4 w-96 h-[400px]">
+    <div hlmCardHeader class="items-center">
+      <h3 hlmCardTitle>Welcome</h3>
+      <p hlmCardDescription>Please sign in to continue!</p>
+    </div>
+    <hlm-form-field class="w-10/12">
+      <input class="w-full" hlmInput type="email" placeholder="Email" />
+    </hlm-form-field>
+    <hlm-form-field class="w-10/12">
+      <input class="w-full" hlmInput type="password" placeholder="Password" />
+    </hlm-form-field>
+    <button hlmBtn class="mx-4 w-10/12">Login</button>
 
-  <button hlmBtn variant="outline">Hello from {{ title }}</button>
-</section>
+    <brn-separator hlmSeparator class="w-10/12" />
+
+    <button hlmBtn class="mx-4 w-10/12">Login with Google</button>
+  </section>
+</div>
