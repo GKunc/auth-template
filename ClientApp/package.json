@@ -2,9 +2,12 @@
   "name": "@client-app/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "serve:login": "npx nx serve login"
+  },
   "private": true,
   "dependencies": {
+    "@abacritt/angularx-social-login": "^2.3.0",
     "@angular/animations": "~18.2.0",
     "@angular/cdk": "^18.2.13",
     "@angular/common": "~18.2.0",
@@ -14,6 +17,8 @@
     "@angular/platform-browser": "~18.2.0",
     "@angular/platform-browser-dynamic": "~18.2.0",
     "@angular/router": "~18.2.0",
+    "@ng-icons/core": "^25.1.0",
+    "@ng-icons/lucide": "^29.10.0",
     "@spartan-ng/ui-core": "^0.0.1-alpha.356",
     "@spartan-ng/ui-formfield-brain": "0.0.1-alpha.356",
     "@spartan-ng/ui-forms-brain": "0.0.1-alpha.356",

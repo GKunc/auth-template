@@ -12,15 +12,34 @@
       <p hlmCardDescription>Please sign in to continue!</p>
     </div>
     <hlm-form-field class="w-10/12">
-      <input class="w-full" hlmInput type="email" placeholder="Email" />
+      <input
+        class="w-full"
+        [(ngModel)]="authData.email"
+        hlmInput
+        type="email"
+        placeholder="Email"
+      />
     </hlm-form-field>
     <hlm-form-field class="w-10/12">
-      <input class="w-full" hlmInput type="password" placeholder="Password" />
+      <input
+        class="w-full"
+        [(ngModel)]="authData.password"
+        hlmInput
+        type="password"
+        placeholder="Password"
+      />
     </hlm-form-field>
-    <button hlmBtn class="mx-4 w-10/12">Login</button>
+    <button (click)="login()" hlmBtn class="mx-4 w-10/12">Login</button>
 
-    <span class="w-10/12 border border-input"></span>
+    <div class="w-10/12 flex items items-center gap-2">
+      <span class="w-full border-t border-input"></span>
+      <span>or</span>
+      <span class="w-full border-t border-input"></span>
+    </div>
 
-    <button hlmBtn class="mx-4 w-10/12">Login with Google</button>
+    <app-google-button
+      class="w-10/12"
+      (loginWithGoogle)="googleSignin($event)"
+    />
   </section>
 </div>
