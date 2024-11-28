@@ -1,6 +1,4 @@
-﻿using CompanyEmployees.Entities.DataTransferObjects;
-using CompanyEmployees.Entities.Models;
-using Google.Apis.Auth;
+﻿using Google.Apis.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -9,20 +7,18 @@ using System.Text;
 using WebApi.DTO;
 using WebApi.Entities;
 
-namespace CompanyEmployees.JwtFeatures
+namespace WebApi.JwtFeatures
 {
     public class JwtHandler
     {
-        private readonly IConfiguration _configuration;
         private readonly IConfigurationSection _jwtSettings;
         private readonly IConfigurationSection _goolgeSettings;
         private readonly UserManager<User> _userManager;
 
         public JwtHandler(IConfiguration configuration, UserManager<User> userManager)
         {
-            _configuration = configuration;
-            _jwtSettings = _configuration.GetSection("JwtSettings");
-            _goolgeSettings = _configuration.GetSection("GoogleAuthSettings");
+            _jwtSettings = configuration.GetSection("JwtSettings");
+            _goolgeSettings = configuration.GetSection("GoogleAuthSettings");
             _userManager = userManager;
         }
 

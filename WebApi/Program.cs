@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(opts =>
-               opts.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection")));
+               opts.UseNpgsql(builder.Configuration.GetConnectionString("SqlConnection")));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
