@@ -6,40 +6,9 @@
 <div
   class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
 >
-  <section hlmCard class="flex flex-col items-center gap-4 w-96 h-[400px]">
-    <div hlmCardHeader class="items-center">
-      <h3 hlmCardTitle>Welcome</h3>
-      <p hlmCardDescription>Please sign in to continue!</p>
-    </div>
-    <hlm-form-field class="w-10/12">
-      <input
-        class="w-full"
-        [(ngModel)]="authData.email"
-        hlmInput
-        type="email"
-        placeholder="Email"
-      />
-    </hlm-form-field>
-    <hlm-form-field class="w-10/12">
-      <input
-        class="w-full"
-        [(ngModel)]="authData.password"
-        hlmInput
-        type="password"
-        placeholder="Password"
-      />
-    </hlm-form-field>
-    <button (click)="login()" hlmBtn class="mx-4 w-10/12">Login</button>
-
-    <div class="w-10/12 flex items items-center gap-2">
-      <span class="w-full border-t border-input"></span>
-      <span>or</span>
-      <span class="w-full border-t border-input"></span>
-    </div>
-
-    <app-google-button
-      class="w-10/12"
-      (loginWithGoogle)="googleSignin($event)"
-    />
-  </section>
+  @if (mode() === Mode.Login) {
+  <app-login (switchMode)="mode.set(Mode.Register)" />
+  } @else {
+  <app-register (switchMode)="mode.set(Mode.Login)" />
+  }
 </div>

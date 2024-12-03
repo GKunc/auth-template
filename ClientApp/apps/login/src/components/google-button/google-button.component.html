@@ -4,5 +4,6 @@
   (click)="handleGoogleLogin()"
 >
   <hlm-icon size="sm" name="lucideLogIn" />
-  Login with Google
+  @if (mode() === Mode.Login) { Login with Google } @else { Register with Google
+  }
 </button>

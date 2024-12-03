@@ -12,13 +12,13 @@ namespace WebApi.JwtFeatures
     public class JwtHandler
     {
         private readonly IConfigurationSection _jwtSettings;
-        private readonly IConfigurationSection _goolgeSettings;
+        private readonly IConfigurationSection _googleSettings;
         private readonly UserManager<User> _userManager;
 
         public JwtHandler(IConfiguration configuration, UserManager<User> userManager)
         {
             _jwtSettings = configuration.GetSection("JwtSettings");
-            _goolgeSettings = configuration.GetSection("GoogleAuthSettings");
+            _googleSettings = configuration.GetSection("GoogleAuthSettings");
             _userManager = userManager;
         }
 
@@ -38,7 +38,7 @@ namespace WebApi.JwtFeatures
             {
                 var settings = new GoogleJsonWebSignature.ValidationSettings()
                 {
-                    Audience = new List<string>() { _goolgeSettings.GetSection("clientId").Value }
+                    Audience = new List<string>() { _googleSettings.GetSection("clientId").Value! }
                 };
 
                 var payload = await GoogleJsonWebSignature.ValidateAsync(externalAuth.IdToken, settings);
@@ -47,14 +47,13 @@ namespace WebApi.JwtFeatures
             }
             catch (Exception ex)
             {
-                //log an exception
                 return null;
             }
         }
 
         private SigningCredentials GetSigningCredentials()
         {
-            var key = Encoding.UTF8.GetBytes(_jwtSettings.GetSection("securityKey").Value);
+            var key = Encoding.UTF8.GetBytes(_jwtSettings.GetSection("securityKey").Value!);
             var secret = new SymmetricSecurityKey(key);
 
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
@@ -68,11 +67,7 @@ namespace WebApi.JwtFeatures
             };
 
             var roles = await _userManager.GetRolesAsync(user);
-            foreach (var role in roles)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, role));
-            }
-
+            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
             return claims;
         }
 
