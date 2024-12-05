@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace WebApi.Controllers;
+namespace WebApi.Configuration;
 
 public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
 {

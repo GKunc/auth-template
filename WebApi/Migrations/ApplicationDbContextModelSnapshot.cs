@@ -50,19 +50,19 @@ namespace WebApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "71ec82d8-7e7f-42f0-879b-28e24a88c52e",
+                            Id = "e8ab7059-f17a-4645-a914-1dbeda4b302a",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
                         },
                         new
                         {
-                            Id = "4c64a9dd-97f4-4a0a-b59d-3c1510ff2d7c",
+                            Id = "0211c496-0982-4165-af0c-62e37e665df6",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         },
                         new
                         {
-                            Id = "d3a39635-969a-4a85-9036-4a34ff58673b",
+                            Id = "409f7a1a-f569-4f86-8dbb-f5569e4fea55",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -221,6 +221,12 @@ namespace WebApi.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("RefreshTokenExpiryTime")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
