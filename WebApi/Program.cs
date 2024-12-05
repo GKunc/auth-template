@@ -11,6 +11,7 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(opts =>
                opts.UseNpgsql(builder.Configuration.GetConnectionString("SqlConnection")));
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddIdentity<User, IdentityRole>(opt =>
     {
