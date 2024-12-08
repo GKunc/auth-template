@@ -1,5 +1,5 @@
-import { Component, inject, output } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, WritableSignal, inject, signal } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import {
   HlmCardDescriptionDirective,
@@ -10,10 +10,18 @@ import {
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmFormFieldModule } from '@spartan-ng/ui-formfield-helm';
 
-import { FormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
-import { GoogleButtonComponent } from '../google-button/google-button.component';
+import { GoogleButtonComponent } from '../../google-button/google-button.component';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from 'libs/shared/src/lib/services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
@@ -29,26 +37,37 @@ import { HttpClient } from '@angular/common/http';
     FormsModule,
     GoogleSigninButtonModule,
     GoogleButtonComponent,
+    ReactiveFormsModule,
+    CommonModule,
   ],
   selector: 'app-login',
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
-  switchMode = output<void>();
-
   http: HttpClient = inject(HttpClient);
+  router: Router = inject(Router);
+  authService: AuthService = inject(AuthService);
 
-  authData: { email: string; password: string } = {
-    email: '',
-    password: '',
-  };
+  loginForm: FormGroup = new FormGroup({
+    email: new FormControl(null, {
+      validators: [Validators.required],
+    }),
+    password: new FormControl(null, {
+      validators: [Validators.required],
+    }),
+  });
 
   googleSignin(googleWrapper: any) {
     googleWrapper.click();
   }
 
   login(): void {
-    console.log(this.authData);
-    this.http.get('https://fakestoreapi.com/products/1').subscribe();
+    if (this.loginForm.valid) {
+      this.authService.login(this.loginForm.value);
+    }
+  }
+
+  createAccount(): void {
+    this.router.navigate(['register']);
   }
 }

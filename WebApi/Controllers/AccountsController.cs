@@ -70,7 +70,7 @@ public class AccountsController : ControllerBase
         await _userManager.ResetAccessFailedCountAsync(user);
         
         user.RefreshToken = refreshToken;
-        user.RefreshTokenExpiryTime = DateTime.SpecifyKind(DateTime.Now.AddDays(2), DateTimeKind.Utc);
+        user.RefreshTokenExpiryTime = DateTime.SpecifyKind(DateTime.Now.AddMinutes(7), DateTimeKind.Utc);
 
         await _userManager.UpdateAsync(user);
         
@@ -80,38 +80,30 @@ public class AccountsController : ControllerBase
     [HttpPost("login/google")]
     public async Task<IActionResult> ExternalLogin([FromBody] GoogleAuthDto externalAuth)
     {
-        // var payload = await _jwtHandler.VerifyGoogleToken(externalAuth);
-        // if (payload == null)
-        //     return BadRequest("Invalid External Authentication.");
-        //
-        // var info = new UserLoginInfo(externalAuth.Provider, payload.Subject, externalAuth.Provider);
-        //
-        // var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
-        // if (user == null)
-        // {
-        //     user = await _userManager.FindByEmailAsync(payload.Email);
-        //     if (user == null)
-        //     {
-        //         user = new User { Email = payload.Email, UserName = payload.Email };
-        //         await _userManager.CreateAsync(user);
-        //
-        //         //prepare and send an email for the email confirmation
-        //
-        //         await _userManager.AddToRoleAsync(user, "Viewer");
-        //         await _userManager.AddLoginAsync(user, info);
-        //     }
-        //     else
-        //     {
-        //         await _userManager.AddLoginAsync(user, info);
-        //     }
-        // }
-        //
-        // if (user == null)
-        //     return BadRequest("Invalid External Authentication.");
-        //
-        // //check for the Locked out account
-        // var token = await _jwtHandler.GenerateToken();
+        var payload = await _jwtHandler.VerifyGoogleToken(externalAuth);
+        
+        var info = new UserLoginInfo(externalAuth.Provider!, payload.Subject, externalAuth.Provider);
+        
+        var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+        if (user == null)
+        {
+            user = await _userManager.FindByEmailAsync(payload.Email);
+            if (user == null)
+            {
+                user = new User { Email = payload.Email, UserName = payload.Email };
+                await _userManager.CreateAsync(user);
+                await _userManager.AddToRoleAsync(user, "Viewer");
+                await _userManager.AddLoginAsync(user, info);
+            }
+            else
+            {
+                await _userManager.AddLoginAsync(user, info);
+            }
+        }
+        
+        var token = await _jwtHandler.GenerateToken(user);
+        var refreshToken = _jwtHandler.GenerateRefreshToken();
 
-        return Ok(new AuthResponseDto { AccessToken = "token_test", IsAuthSuccessful = true });
+        return Ok(new AuthResponseDto { AccessToken = token, RefreshToken = refreshToken, IsAuthSuccessful = true });
     }
 }

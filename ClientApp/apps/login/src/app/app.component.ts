@@ -14,9 +14,8 @@ import {
   GoogleSigninButtonModule,
   SocialAuthService,
 } from '@abacritt/angularx-social-login';
-import { LoginComponent } from '../components/login/login.component';
 import { Mode } from './app.model';
-import { RegisterComponent } from '../components/register/register.component';
+import { HlmToasterComponent } from '@spartan-ng/ui-sonner-helm';
 
 @Component({
   standalone: true,
@@ -26,8 +25,7 @@ import { RegisterComponent } from '../components/register/register.component';
     RouterModule,
     FormsModule,
     GoogleSigninButtonModule,
-    LoginComponent,
-    RegisterComponent,
+    HlmToasterComponent,
   ],
   selector: 'app-root',
   templateUrl: './app.component.html',

@@ -47,13 +47,14 @@ namespace WebApi.JwtFeatures
         {
             var tokenValidationParameters = new TokenValidationParameters
             {
-                ValidateAudience = false, //you might want to validate the audience and issuer depending on your use case
+                ValidateAudience = false,
                 ValidateIssuer = false,
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345")),
-                ValidateLifetime = false //here we are saying that we don't care about the token's expiration date
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.GetSection("securityKey").Value!)),
+                ValidateLifetime = false 
             };
             var tokenHandler = new JwtSecurityTokenHandler();
+            
             SecurityToken securityToken;
             var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
             var jwtSecurityToken = securityToken as JwtSecurityToken;
@@ -68,7 +69,7 @@ namespace WebApi.JwtFeatures
             {
                 var settings = new GoogleJsonWebSignature.ValidationSettings()
                 {
-                    Audience = new List<string>() { _googleSettings.GetSection("clientId").Value! }
+                    Audience = new List<string>() { _googleSettings.GetSection("ClientId").Value! }
                 };
 
                 var payload = await GoogleJsonWebSignature.ValidateAsync(externalAuth.IdToken, settings);
@@ -100,7 +101,7 @@ namespace WebApi.JwtFeatures
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
             return claims;
         }
-
+        
         private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
         {
             var tokenOptions = new JwtSecurityToken(

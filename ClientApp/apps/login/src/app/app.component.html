@@ -1,14 +1,11 @@
-<div class="w-full h-5 absolute top-0">
+<div class="w-full h-full absolute top-0 p-6">
+  <hlm-toaster position="top-right" />
+
   <button (click)="toggleTheme()" hlmBtn size="sm" class="m-2">
     Toggle Theme
   </button>
-</div>
-<div
-  class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
->
-  @if (mode() === Mode.Login) {
-  <app-login (switchMode)="mode.set(Mode.Register)" />
-  } @else {
-  <app-register (switchMode)="mode.set(Mode.Login)" />
-  }
+
+  <div class="mt-6">
+    <router-outlet />
+  </div>
 </div>
