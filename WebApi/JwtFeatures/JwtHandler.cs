@@ -94,7 +94,7 @@ namespace WebApi.JwtFeatures
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.Email!)
+                new Claim(ClaimTypes.Name, user.Email!),
             };
 
             var roles = await _userManager.GetRolesAsync(user);

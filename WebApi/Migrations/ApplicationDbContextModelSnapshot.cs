@@ -50,19 +50,19 @@ namespace WebApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "321a605d-2e6e-4aa4-8247-0fe7cd958a9d",
+                            Id = "16818a94-84e5-4d8b-abc6-670b3702c2f4",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
                         },
                         new
                         {
-                            Id = "5039a749-b9c2-4826-9202-b547841d2f43",
+                            Id = "7f63cc9d-d208-4897-bfc9-4f5401a4acb2",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         },
                         new
                         {
-                            Id = "12267ba1-b98d-4503-b3fd-0cd31080d806",
+                            Id = "9709e011-7150-4380-a8ff-7ce56d6fbf45",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -153,6 +153,13 @@ namespace WebApi.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "a88d0ad8-82aa-4607-849e-4cdcf96aac86",
+                            RoleId = "12267ba1-b98d-4503-b3fd-0cd31080d806"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -248,6 +255,25 @@ namespace WebApi.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "a88d0ad8-82aa-4607-849e-4cdcf96aac86",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "93043258-ace8-4f55-a91a-868499115bfb",
+                            Email = "admin@example.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@EXAMPLE.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPwybqZ0VwY0vBWm6BSH40CiCNnHlGCpOWi/ivFuj/lP2bYHeGXj+gpspATRcCCNOA==",
+                            PhoneNumberConfirmed = false,
+                            RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SecurityStamp = "6d6d88a6-ab52-4ac7-9ce8-c230d9a5176a",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
