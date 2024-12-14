@@ -21,7 +21,7 @@ public class StudentsController : ControllerBase
         _mapper = mapper;
     }
 
-    [Authorize(Roles = "Admin,Teacher")]
+    [Authorize(Roles = "Administrator,Teacher")]
     [HttpGet]
     public async Task<IActionResult> GetStudents()
     {
@@ -29,7 +29,7 @@ public class StudentsController : ControllerBase
        return Ok(students);
     }
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Administrator")]
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] UserForRegistrationDto userForRegistration)
     {

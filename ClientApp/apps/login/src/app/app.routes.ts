@@ -13,17 +13,24 @@ export const appRoutes: Route[] = [
           ),
       },
       {
-        path: 'register',
+        path: 'dashboard',
         loadComponent: () =>
-          import(
-            '../components/authentication/register/register.component'
-          ).then((c) => c.RegisterComponent),
+          import('../components/dashboard/dashboard.component').then(
+            (c) => c.DashboardComponent
+          ),
       },
       {
         path: 'lessons',
         loadComponent: () =>
           import('../components/lessons/lessons.component').then(
             (c) => c.LessonsComponennt
+          ),
+      },
+      {
+        path: 'students',
+        loadComponent: () =>
+          import('../components/students/students.component').then(
+            (c) => c.StudentsComponennt
           ),
       },
     ],
