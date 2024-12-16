@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Output, input } from '@angular/core';
-import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
-import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { Mode } from '../../app/app.model';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   standalone: true,
-  imports: [HlmButtonDirective, HlmIconComponent],
+  imports: [ButtonModule],
   selector: 'app-google-button',
   templateUrl: './google-button.component.html',
 })

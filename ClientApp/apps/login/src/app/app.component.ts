@@ -6,8 +6,6 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
-import { HlmFormFieldModule } from '@spartan-ng/ui-formfield-helm';
 
 import { FormsModule } from '@angular/forms';
 import {
@@ -15,18 +13,10 @@ import {
   SocialAuthService,
 } from '@abacritt/angularx-social-login';
 import { Mode } from './app.model';
-import { HlmToasterComponent } from '@spartan-ng/ui-sonner-helm';
 
 @Component({
   standalone: true,
-  imports: [
-    HlmButtonDirective,
-    HlmFormFieldModule,
-    RouterModule,
-    FormsModule,
-    GoogleSigninButtonModule,
-    HlmToasterComponent,
-  ],
+  imports: [RouterModule, FormsModule, GoogleSigninButtonModule],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.less',

@@ -19,6 +19,9 @@ import { provideIcons } from '@ng-icons/core';
 import { lucideChevronRight, lucideLogIn } from '@ng-icons/lucide';
 import { AuthService } from 'libs/shared/src/lib/services/auth.service';
 import { Observable } from 'rxjs';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -43,6 +46,12 @@ export const appConfig: ApplicationConfig = {
     provideIcons({
       lucideChevronRight,
       lucideLogIn,
+    }),
+    provideAnimationsAsync(),
+    providePrimeNG({
+      theme: {
+        preset: Aura,
+      },
     }),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(appRoutes),

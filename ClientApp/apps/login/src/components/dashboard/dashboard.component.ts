@@ -1,27 +1,16 @@
 import { Component, inject } from '@angular/core';
-import {
-  HlmCardDescriptionDirective,
-  HlmCardDirective,
-  HlmCardHeaderDirective,
-  HlmCardTitleDirective,
-} from '@spartan-ng/ui-card-helm';
 
 import { CommonModule } from '@angular/common';
 import { AuthService } from 'libs/shared/src/lib/services/auth.service';
-import { HlmH2Directive } from '@spartan-ng/ui-typography-helm';
+import { provideIcons } from '@ng-icons/core';
+import { lucideSettings } from '@ng-icons/lucide';
 
 @Component({
   standalone: true,
-  imports: [
-    HlmCardDescriptionDirective,
-    HlmCardDirective,
-    HlmCardHeaderDirective,
-    HlmCardTitleDirective,
-    CommonModule,
-    HlmH2Directive,
-  ],
+  imports: [CommonModule],
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
+  providers: [provideIcons({ lucideSettings })],
   styles: [
     `
       .dashboard__grid {
