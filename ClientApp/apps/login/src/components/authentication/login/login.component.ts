@@ -14,6 +14,12 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'libs/shared/src/lib/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+import { InputGroup } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { Message } from 'primeng/message';
+import { Card } from 'primeng/card';
 
 @Component({
   standalone: true,
@@ -23,6 +29,12 @@ import { ButtonModule } from 'primeng/button';
     GoogleSigninButtonModule,
     GoogleButtonComponent,
     ButtonModule,
+    InputGroup,
+    InputGroupAddonModule,
+    InputTextModule,
+    PasswordModule,
+    Message,
+    Card,
     ReactiveFormsModule,
     CommonModule,
   ],

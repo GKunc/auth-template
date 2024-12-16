@@ -1,53 +1,61 @@
 <div
   class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
 >
-  <section hlmCard class="flex flex-col items-center gap-4 w-96 pb-6">
-    <div hlmCardHeader class="items-center">
-      <h3 hlmCardTitle>Welcome</h3>
-      <p hlmCardDescription>Please sign in to continue!</p>
+  <section class="flex flex-col items-center gap-4 w-96 pb-6">
+    <div class="items-center">
+      <h1 class="text-center text-3xl font-bold">Welcome</h1>
+      <p class="text-slate-400">Please sign in to continue!</p>
     </div>
-    <!-- <form [formGroup]="loginForm" class="w-10/12 flex flex-col gap-4">
-      <hlm-form-field>
-        <input
-          class="w-full"
-          formControlName="email"
-          email
-          hlmInput
-          type="email"
-          placeholder="Email"
-        />
-        @if (loginForm.get('email')?.getError('email')) {
-        <hlm-error>Incorrect email</hlm-error>
-        } @if (loginForm.get('email')?.getError('requiret')) {
-        <hlm-error>Email is required</hlm-error>
-        }
-      </hlm-form-field>
-      <hlm-form-field>
-        <input
+    <p-card [style]="{ width: '400px' }">
+      <form [formGroup]="loginForm" class="flex flex-col gap-4 mb-4">
+        <p-inputgroup>
+          <input
+            pInputText
+            class="w-full"
+            formControlName="email"
+            type="email"
+            placeholder="Email"
+            email
+          />
+        </p-inputgroup>
+        @if(loginForm.get('email')?.touched) { @if
+        (loginForm.get('email')?.getError('email')) {
+        <p-message severity="error" variant="simple" size="small"
+          >Incorrect email</p-message
+        >
+        } @if (loginForm.get('email')?.getError('required')) {
+        <p-message severity="error" variant="simple" size="small"
+          >Email is required</p-message
+        >
+        } }
+        <p-password
+          [toggleMask]="true"
+          [fluid]="true"
           class="w-full"
           formControlName="password"
-          password
-          hlmInput
-          type="password"
           placeholder="Password"
         />
-        @if (loginForm.get('password')?.getError('requiret')) {
-        <hlm-error>Email is required</hlm-error>
+
+        @if (loginForm.get('password')?.touched &&
+        loginForm.get('password')?.getError('required')) {
+        <p-message severity="error" variant="simple" size="small"
+          >Password is required</p-message
+        >
         }
-      </hlm-form-field>
-    </form> -->
+      </form>
 
-    <p-button (click)="login()" label="Login" class="mx-4 w-10/12" />
+      <p-button [fluid]="true" (click)="login()" label="Login" class="mt-4" />
 
-    <div class="w-10/12 flex items items-center gap-2">
-      <span class="w-full border-t border-input"></span>
-      <span>or</span>
-      <span class="w-full border-t border-input"></span>
-    </div>
+      <div class="flex items items-center gap-2 my-4">
+        <span class="w-full border-t border-input"></span>
+        <span>or</span>
+        <span class="w-full border-t border-input"></span>
+      </div>
 
-    <app-google-button
-      class="w-10/12"
-      (loginWithGoogle)="googleSignin($event)"
-    />
+      <app-google-button
+        class="w-10/12"
+        (loginWithGoogle)="googleSignin($event)"
+      />
+    </p-card>
   </section>
 </div>
