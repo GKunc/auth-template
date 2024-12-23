@@ -62,7 +62,7 @@ namespace WebApi.Migrations
                         },
                         new
                         {
-                            Id = "9709e011-7150-4380-a8ff-7ce56d6fbf45",
+                            Id = "66f24bd2-b173-447c-8360-1e9d105fffa5",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -153,13 +153,6 @@ namespace WebApi.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "a88d0ad8-82aa-4607-849e-4cdcf96aac86",
-                            RoleId = "12267ba1-b98d-4503-b3fd-0cd31080d806"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -261,16 +254,16 @@ namespace WebApi.Migrations
                         {
                             Id = "a88d0ad8-82aa-4607-849e-4cdcf96aac86",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "93043258-ace8-4f55-a91a-868499115bfb",
+                            ConcurrencyStamp = "4d5e52eb-ea0d-4f91-9be8-ce00b44b6847",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPwybqZ0VwY0vBWm6BSH40CiCNnHlGCpOWi/ivFuj/lP2bYHeGXj+gpspATRcCCNOA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECxW7YsOMZ9XgL4svpuzoFeS8LEmOg4vBo0bVaUzER5F05wlI0d4Xyks9dV/dZSO6A==",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SecurityStamp = "6d6d88a6-ab52-4ac7-9ce8-c230d9a5176a",
+                            SecurityStamp = "ef386a4b-8a25-4464-a139-a742f363ff7d",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });

@@ -12,8 +12,8 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241210182017_Add Admin With role")]
-    partial class AddAdminWithrole
+    [Migration("20241222104915_01_users")]
+    partial class _01_users
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,7 +65,7 @@ namespace WebApi.Migrations
                         },
                         new
                         {
-                            Id = "9709e011-7150-4380-a8ff-7ce56d6fbf45",
+                            Id = "19a9594c-2c6e-49bd-82ed-5c05751eef1c",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -156,13 +156,6 @@ namespace WebApi.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "a88d0ad8-82aa-4607-849e-4cdcf96aac86",
-                            RoleId = "12267ba1-b98d-4503-b3fd-0cd31080d806"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -258,25 +251,6 @@ namespace WebApi.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "a88d0ad8-82aa-4607-849e-4cdcf96aac86",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "93043258-ace8-4f55-a91a-868499115bfb",
-                            Email = "admin@example.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@EXAMPLE.COM",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPwybqZ0VwY0vBWm6BSH40CiCNnHlGCpOWi/ivFuj/lP2bYHeGXj+gpspATRcCCNOA==",
-                            PhoneNumberConfirmed = false,
-                            RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SecurityStamp = "6d6d88a6-ab52-4ac7-9ce8-c230d9a5176a",
-                            TwoFactorEnabled = false,
-                            UserName = "admin"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

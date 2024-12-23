@@ -12,8 +12,8 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241209183206_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241222105136_02_admin")]
+    partial class _02_admin
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,7 +65,7 @@ namespace WebApi.Migrations
                         },
                         new
                         {
-                            Id = "9709e011-7150-4380-a8ff-7ce56d6fbf45",
+                            Id = "66f24bd2-b173-447c-8360-1e9d105fffa5",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -156,13 +156,6 @@ namespace WebApi.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "55e8affe-41ae-4635-ad4b-2c3081f81eb6",
-                            RoleId = "9709e011-7150-4380-a8ff-7ce56d6fbf45"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -262,18 +255,18 @@ namespace WebApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "55e8affe-41ae-4635-ad4b-2c3081f81eb6",
+                            Id = "a88d0ad8-82aa-4607-849e-4cdcf96aac86",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0dfc8564-e998-4970-9839-e865d414bcd2",
+                            ConcurrencyStamp = "4d5e52eb-ea0d-4f91-9be8-ce00b44b6847",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAFO88JVNvImLcO32WFZfyB94gPoqqOlyQj0EwycrbY7Sn1q+FL6WZVUsNXcJCgXTg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECxW7YsOMZ9XgL4svpuzoFeS8LEmOg4vBo0bVaUzER5F05wlI0d4Xyks9dV/dZSO6A==",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SecurityStamp = "38fa76bf-ed6d-478b-8081-03092de1b6cd",
+                            SecurityStamp = "ef386a4b-8a25-4464-a139-a742f363ff7d",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });

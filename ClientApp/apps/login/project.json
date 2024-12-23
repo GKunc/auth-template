@@ -15,14 +15,14 @@
         "browser": "apps/login/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "apps/login/tsconfig.app.json",
-        "inlineStyleLanguage": "less",
+        "inlineStyleLanguage": "css",
         "assets": [
           {
             "glob": "**/*",
             "input": "apps/login/public"
           }
         ],
-        "styles": ["apps/login/src/styles.less"],
+        "styles": ["apps/login/src/styles.css"],
         "scripts": []
       },
       "configurations": {
