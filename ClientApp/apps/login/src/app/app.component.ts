@@ -13,10 +13,11 @@ import {
   SocialAuthService,
 } from '@abacritt/angularx-social-login';
 import { Mode } from './app.model';
+import { Toast } from 'primeng/toast';
 
 @Component({
   standalone: true,
-  imports: [RouterModule, FormsModule, GoogleSigninButtonModule],
+  imports: [RouterModule, FormsModule, GoogleSigninButtonModule, Toast],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.less',

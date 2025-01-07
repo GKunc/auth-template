@@ -17,15 +17,18 @@ import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { provideIcons } from '@ng-icons/core';
 import { lucideChevronRight, lucideLogIn } from '@ng-icons/lucide';
-import { AuthService } from 'libs/shared/src/lib/services/auth.service';
 import { Observable } from 'rxjs';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
+import { AuthService } from 'libs/shared/src/lib/services/auth.service';
+import { MessageService } from 'primeng/api';
+import { MyPreset } from './ng-prime.preset';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     AuthService,
+    MessageService,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
@@ -50,7 +53,12 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
-        preset: Aura,
+        preset: MyPreset,
+        options: {
+          prefix: 'p',
+          darkModeSelector: 'system',
+          cssLayer: false
+        }
       },
     }),
     provideZoneChangeDetection({ eventCoalescing: true }),

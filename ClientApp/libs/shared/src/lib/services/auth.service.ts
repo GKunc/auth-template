@@ -1,6 +1,5 @@
 import {
   Injectable,
-  OnInit,
   WritableSignal,
   inject,
   signal,
@@ -9,13 +8,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { toast } from 'ngx-sonner';
 import { jwtDecode } from 'jwt-decode';
+import { MessageService } from 'primeng/api';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private http: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
+  private messageService: MessageService = inject(MessageService);
 
   loggedUser: WritableSignal<LoggedUser | null> = signal(null);
 
@@ -31,9 +31,7 @@ export class AuthService {
       .post<any>('/api/accounts/login', credentials)
       .pipe(
         catchError((e) => {
-          toast.error('Error', {
-            description: 'Incorrect email or password',
-          });
+          this.messageService.add({ severity: 'error', summary: 'Message 1', detail: 'Message Content' });
           return throwError(e);
         })
       )

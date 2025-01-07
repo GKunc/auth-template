@@ -1,6 +1,5 @@
 import { HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { Observable, catchError, switchMap, throwError } from 'rxjs';
-import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 export function loggingInterceptor(
