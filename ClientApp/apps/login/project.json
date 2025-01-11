@@ -22,7 +22,7 @@
             "input": "apps/login/public"
           }
         ],
-        "styles": ["apps/login/src/styles.css"],
+        "styles": ["apps/login/src/styles.less"],
         "scripts": []
       },
       "configurations": {

@@ -7,6 +7,7 @@ using WebApi.JwtFeatures;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
+using WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(opts =>
@@ -59,6 +60,12 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddScoped<JwtHandler>();
+
+var emailConfig = builder.Configuration
+    .GetSection("EmailConfiguration")
+    .Get<EmailConfiguration>();
+builder.Services.AddSingleton(emailConfig);
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

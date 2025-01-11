@@ -24,7 +24,7 @@ public class AccountsController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] UserForAuthenticationDto userForAuthentication)
     {
-        var user = await _userManager.FindByNameAsync(userForAuthentication.Email!);
+        var user = await _userManager.FindByEmailAsync(userForAuthentication.Email!);
         if (user == null)
             return BadRequest("Invalid Request");
 
@@ -54,6 +54,20 @@ public class AccountsController : ControllerBase
         await _userManager.UpdateAsync(user);
         
         return Ok(new AuthResponseDto { IsAuthSuccessful = true, AccessToken = token, RefreshToken = refreshToken });
+    }
+    
+    [HttpGet("confirm-email")]
+    public async Task<IActionResult> EmailConfirmation([FromQuery] string email, [FromQuery] string token)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null)
+            return BadRequest("Invalid Email Confirmation Request");
+
+        var confirmResult = await _userManager.ConfirmEmailAsync(user, token);
+        if (!confirmResult.Succeeded)
+            return BadRequest("Invalid Email Confirmation Request");
+            
+        return Ok();
     }
     
     [HttpPost("login/google")]

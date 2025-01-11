@@ -2,8 +2,10 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using WebApi.DTO;
 using WebApi.Entities;
+using WebApi.Services;
 
 namespace WebApi.Controllers;
 
@@ -13,11 +15,13 @@ namespace WebApi.Controllers;
 public class StudentsController : ControllerBase
 {
     private readonly UserManager<User> _userManager;
+    private readonly IEmailService _emailService;
     private readonly IMapper _mapper;
 
-    public StudentsController(UserManager<User> userManager, IMapper mapper)
+    public StudentsController(UserManager<User> userManager, IEmailService emailService,IMapper mapper)
     {
         _userManager = userManager;
+        _emailService = emailService;
         _mapper = mapper;
     }
 
@@ -44,6 +48,17 @@ public class StudentsController : ControllerBase
             return BadRequest(new RegistrationResponseDto { Errors = errors });
         }
 
+        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        Console.WriteLine(token);
+        var param = new Dictionary<string, string?>
+        {
+            {"token", token },
+            {"email", user.Email }
+        };
+        var callback = QueryHelpers.AddQueryString("http://localhost:4400", param);
+        var message = new EmailMessage([user.Email], "Email Confirmation token", callback, null);
+        await _emailService.SendEmailAsync(message);
+        
         await _userManager.AddToRoleAsync(user, "Student");
 
         return StatusCode(201);

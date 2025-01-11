@@ -13,6 +13,13 @@ export const appRoutes: Route[] = [
           ),
       },
       {
+        path: 'email-confirmation',
+        loadComponent: () =>
+          import(
+            '../components/authentication/email-confirmation/email-confirmation.component'
+          ).then((c) => c.EmailConfirmationComponent),
+      },
+      {
         path: 'dashboard',
         loadComponent: () =>
           import('../components/dashboard/dashboard.component').then(

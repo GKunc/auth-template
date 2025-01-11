@@ -42,7 +42,13 @@
         }
       </form>
 
-      <p-button [fluid]="true" (click)="login()" label="Login" class="mt-4" />
+      <p-button
+        [fluid]="true"
+        [loading]="loading"
+        (click)="login()"
+        label="Login"
+        class="mt-4"
+      />
 
       <div class="flex items items-center gap-2 my-4">
         <span class="w-full border-t border-input"></span>

@@ -1,6 +1,14 @@
-import { HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
+import {
+  HttpContextToken,
+  HttpEvent,
+  HttpHandlerFn,
+  HttpRequest,
+} from '@angular/common/http';
 import { Observable, catchError, switchMap, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+
+export const SKIP_HTTP_ERRORS_INTERCEPTOR: HttpContextToken<boolean> =
+  new HttpContextToken(() => false);
 
 export function loggingInterceptor(
   request: HttpRequest<unknown>,
@@ -19,6 +27,9 @@ export function loggingInterceptor(
 
   return next(request).pipe(
     catchError((error) => {
+      if (request.context.get(SKIP_HTTP_ERRORS_INTERCEPTOR)) {
+        return throwError(error);
+      }
       console.log('error', error);
       if (error.status === 401 && accessToken) {
         return handleTokenExpired(request, next, authService);

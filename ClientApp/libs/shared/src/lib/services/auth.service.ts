@@ -1,21 +1,17 @@
-import {
-  Injectable,
-  WritableSignal,
-  inject,
-  signal,
-} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable, WritableSignal, inject, signal } from '@angular/core';
+import { HttpClient, HttpContext, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { MessageService } from 'primeng/api';
+import { CustomEncoder } from './custom-ecoder';
+import { SKIP_HTTP_ERRORS_INTERCEPTOR } from '../interceptors/auth.interceptor';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private http: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
-  private messageService: MessageService = inject(MessageService);
 
   loggedUser: WritableSignal<LoggedUser | null> = signal(null);
 
@@ -26,21 +22,8 @@ export class AuthService {
     }
   }
 
-  login(credentials: { email: string; password: string }): void {
-    this.http
-      .post<any>('/api/accounts/login', credentials)
-      .pipe(
-        catchError((e) => {
-          this.messageService.add({ severity: 'error', summary: 'Message 1', detail: 'Message Content' });
-          return throwError(e);
-        })
-      )
-      .subscribe((result: any) => {
-        localStorage.setItem('accessToken', result.accessToken);
-        localStorage.setItem('refreshToken', result.refreshToken);
-        this.loggedUser.set(jwtDecode(result.accessToken));
-        this.router.navigate(['dashboard']);
-      });
+  login(credentials: { email: string; password: string }): Observable<any> {
+    return this.http.post<void>('/api/accounts/login', credentials);
   }
 
   refreshAccessToken(): Observable<any> {
@@ -67,6 +50,17 @@ export class AuthService {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     this.router.navigate(['login']);
+  }
+
+  confirmEmail(token: string, email: string): Observable<any> {
+    let params = new HttpParams({ encoder: new CustomEncoder() });
+    params = params.append('token', token);
+    params = params.append('email', email);
+
+    return this.http.get('/api/accounts/confirm-email', {
+      params,
+      context: new HttpContext().set(SKIP_HTTP_ERRORS_INTERCEPTOR, true),
+    });
   }
 }
 
