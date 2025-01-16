@@ -14,13 +14,21 @@ public class TeachersController : ControllerBase
 {
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
-
+    private static Random random = new Random();
+    
     public TeachersController(UserManager<User> userManager, IMapper mapper)
     {
         _userManager = userManager;
         _mapper = mapper;
     }
 
+    public static string RandomString(int length)
+    {
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        return new string(Enumerable.Repeat(chars, length)
+            .Select(s => s[random.Next(s.Length)]).ToArray());
+    }
+    
     [Authorize(Roles = "Administrator,Teacher,Student")]
     [HttpGet]
     public async Task<IActionResult> GetTeachers()
@@ -37,7 +45,8 @@ public class TeachersController : ControllerBase
             return BadRequest();
 
         var user = _mapper.Map<User>(userForRegistration);
-        var result = await _userManager.CreateAsync(user, userForRegistration.Password!);
+        var password = RandomString(10);
+        var result = await _userManager.CreateAsync(user, password);
         if (!result.Succeeded)
         {
             var errors = result.Errors.Select(e => e.Description);

@@ -28,13 +28,12 @@ export function loggingInterceptor(
   return next(request).pipe(
     catchError((error) => {
       if (request.context.get(SKIP_HTTP_ERRORS_INTERCEPTOR)) {
-        return throwError(error);
+        return throwError(() => error);
       }
       console.log('error', error);
       if (error.status === 401 && accessToken) {
         return handleTokenExpired(request, next, authService);
       }
-      authService.logout();
       return throwError(() => error);
     })
   );

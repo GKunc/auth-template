@@ -25,6 +25,22 @@ export const appRoutes: Route[] = [
           import('../components/dashboard/dashboard.component').then(
             (c) => c.DashboardComponent
           ),
+        children: [
+          {
+            path: 'add-student',
+            loadComponent: () =>
+              import(
+                '../components/dashboard/widgets/students/add-student/add-student.component'
+              ).then((c) => c.AddStudentComponent),
+          },
+          {
+            path: 'student-list',
+            loadComponent: () =>
+              import(
+                '../components/dashboard/widgets/students/student-list/student-list.component'
+              ).then((c) => c.StudentListComponent),
+          },
+        ],
       },
       {
         path: 'lessons',
