@@ -7,7 +7,7 @@ import {
   signal,
 } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
+
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { HttpClient } from '@angular/common/http';
@@ -20,12 +20,11 @@ import { finalize } from 'rxjs';
 @Component({
   standalone: true,
   imports: [
-    CommonModule,
     CardModule,
     TableModule,
     ButtonModule,
-    ProgressSpinnerModule,
-  ],
+    ProgressSpinnerModule
+],
   selector: 'app-student-list',
   templateUrl: './student-list.component.html',
   styles: [
@@ -35,7 +34,7 @@ import { finalize } from 'rxjs';
         height: 100%;
       }
 
-      ::ng-deep .loaderContainer .p-card {
+      ::ng-deep .loader-container .p-card-content {
         width: 100%;
         display: flex;
         align-items: center;

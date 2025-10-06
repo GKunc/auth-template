@@ -4,7 +4,7 @@
     <p-button (click)="addNewStudent()" label="+ Add Student" />
   </div>
 
-  <p-card [class.loaderContainer]="loading()">
+  <p-card [class.loader-container]="loading()">
     @if (loading()) {
       <p-progress-spinner ariaLabel="loading" />
     } @else {

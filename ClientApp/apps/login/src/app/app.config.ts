@@ -20,8 +20,7 @@ import { lucideChevronRight, lucideLogIn } from '@ng-icons/lucide';
 import { Observable } from 'rxjs';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
-import Aura from '@primeng/themes/aura';
-import { AuthService } from 'libs/shared/src/lib/services/auth.service';
+import { AuthService } from '@client-app/shared';
 import { MessageService } from 'primeng/api';
 import { MyPreset } from './ng-prime.preset';
 

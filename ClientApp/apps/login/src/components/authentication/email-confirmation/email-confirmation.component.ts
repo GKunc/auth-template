@@ -2,9 +2,8 @@ import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { AuthService } from 'libs/shared/src/lib/services/auth.service';
-import { CommonModule } from '@angular/common';
+import { AuthService } from '@client-app/shared';
+
 import { ButtonModule } from 'primeng/button';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
@@ -25,21 +24,19 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     PasswordModule,
     Card,
     ReactiveFormsModule,
-    CommonModule,
-    SkeletonModule,
-  ],
+    SkeletonModule
+],
   selector: 'app-email-confirmation',
   templateUrl: './email-confirmation.component.html',
 })
 export class EmailConfirmationComponent implements OnInit {
-  private http: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
   private authService: AuthService = inject(AuthService);
   private route: ActivatedRoute = inject(ActivatedRoute);
-  private destroyedRef = inject(DestroyRef);
+  private destroyedRef: DestroyRef = inject(DestroyRef);
 
-  success: boolean = false;
-  loading: boolean = true;
+  success = false;
+  loading = true;
 
   ngOnInit(): void {
     const token = this.route.snapshot.queryParams['token'];

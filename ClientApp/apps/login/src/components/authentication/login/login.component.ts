@@ -10,8 +10,8 @@ import {
 } from '@angular/forms';
 import { GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
 import { GoogleButtonComponent } from '../../google-button/google-button.component';
-import { AuthService } from 'libs/shared/src/lib/services/auth.service';
-import { CommonModule } from '@angular/common';
+import { AuthService } from '@client-app/shared';
+
 import { ButtonModule } from 'primeng/button';
 import { InputGroup } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
@@ -39,9 +39,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     PasswordModule,
     Message,
     Card,
-    ReactiveFormsModule,
-    CommonModule,
-  ],
+    ReactiveFormsModule
+],
   selector: 'app-login',
   templateUrl: './login.component.html',
 })
@@ -51,7 +50,7 @@ export class LoginComponent {
   private messageService: MessageService = inject(MessageService);
   private destroyedRef = inject(DestroyRef);
 
-  loading: boolean = false;
+  loading = false;
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl(null, {
@@ -62,7 +61,7 @@ export class LoginComponent {
     }),
   });
 
-  googleSignin(googleWrapper: any) {
+  googleSignIn(googleWrapper: any) {
     googleWrapper.click();
   }
 

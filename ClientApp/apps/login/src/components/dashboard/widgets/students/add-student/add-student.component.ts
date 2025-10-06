@@ -6,7 +6,7 @@ import {
   signal,
 } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
+
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { InputGroup } from 'primeng/inputgroup';
@@ -20,14 +20,13 @@ import { finalize } from 'rxjs';
 @Component({
   standalone: true,
   imports: [
-    CommonModule,
     CardModule,
     ReactiveFormsModule,
     InputGroup,
     InputGroupAddonModule,
     InputTextModule,
-    ButtonModule,
-  ],
+    ButtonModule
+],
   selector: 'app-add-student',
   templateUrl: './add-student.component.html',
   styles: [

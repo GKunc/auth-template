@@ -1,23 +1,23 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
+
 import { MenuModule } from 'primeng/menu';
-import { MenuItem } from 'primeng/api/menuitem';
+import { MenuItem } from 'primeng/api';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, MenuModule, RouterModule],
+  imports: [MenuModule, RouterModule],
   selector: 'app-dashboard',
   styleUrl: './dashboard.component.less',
   templateUrl: './dashboard.component.html',
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   private router: Router = inject(Router);
 
   menuItems: MenuItem[] | undefined;
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.menuItems = [
       {
         label: 'Home',
