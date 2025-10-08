@@ -1,30 +1,19 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  WritableSignal,
-  inject,
-  signal,
-} from '@angular/core';
-
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpClient,
+  httpResource,
+  HttpResourceRef,
+} from '@angular/common/http';
 import { Student } from './student-list.model';
 import { ButtonModule } from 'primeng/button';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs';
 
 @Component({
-  standalone: true,
-  imports: [
-    CardModule,
-    TableModule,
-    ButtonModule,
-    ProgressSpinnerModule
-],
+  imports: [CardModule, TableModule, ButtonModule, ProgressSpinnerModule],
   selector: 'app-student-list',
   templateUrl: './student-list.component.html',
   styles: [
@@ -43,24 +32,18 @@ import { finalize } from 'rxjs';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StudentListComponent implements OnInit {
+export class StudentListComponent {
   http: HttpClient = inject(HttpClient);
   router: Router = inject(Router);
 
-  students: WritableSignal<Student[]> = signal([]);
-  loading: WritableSignal<boolean> = signal(true);
+  studentsResource: HttpResourceRef<Student[]> = httpResource<Student[]>(
+    () => '/api/students',
+    {
+      defaultValue: [],
+    }
+  );
 
   selectedStudent!: Student;
-
-  ngOnInit(): void {
-    this.loading.set(true);
-    this.http
-      .get<Student[]>('/api/students')
-      .pipe(finalize(() => this.loading.set(false)))
-      .subscribe((students) => {
-        this.students.set(students);
-      });
-  }
 
   addNewStudent(): void {
     this.router.navigate(['dashboard/add-student']);

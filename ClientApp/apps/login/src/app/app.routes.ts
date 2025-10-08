@@ -53,7 +53,7 @@ export const appRoutes: Route[] = [
         path: 'students',
         loadComponent: () =>
           import('../components/students/students.component').then(
-            (c) => c.StudentsComponennt
+            (c) => c.StudentsComponent
           ),
       },
     ],

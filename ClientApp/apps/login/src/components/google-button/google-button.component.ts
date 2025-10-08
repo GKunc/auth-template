@@ -1,9 +1,8 @@
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Mode } from '../../app/app.model';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
-  standalone: true,
   imports: [ButtonModule],
   selector: 'app-google-button',
   templateUrl: './google-button.component.html',
@@ -12,7 +11,7 @@ export class GoogleButtonComponent {
   [x: string]: any;
   public readonly mode = input<Mode>(Mode.Login);
 
-  @Output() loginWithGoogle: EventEmitter<any> = new EventEmitter<any>();
+  readonly loginWithGoogle = output<any>();
 
   Mode: typeof Mode = Mode;
 

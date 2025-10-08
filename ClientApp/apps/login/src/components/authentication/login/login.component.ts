@@ -26,7 +26,6 @@ import { throwError } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  standalone: true,
   imports: [
     RouterModule,
     FormsModule,
@@ -39,8 +38,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     PasswordModule,
     Message,
     Card,
-    ReactiveFormsModule
-],
+    ReactiveFormsModule,
+  ],
   selector: 'app-login',
   templateUrl: './login.component.html',
 })

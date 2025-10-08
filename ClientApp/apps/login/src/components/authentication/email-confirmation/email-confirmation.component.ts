@@ -14,7 +14,6 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  standalone: true,
   imports: [
     RouterModule,
     FormsModule,
@@ -24,8 +23,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     PasswordModule,
     Card,
     ReactiveFormsModule,
-    SkeletonModule
-],
+    SkeletonModule,
+  ],
   selector: 'app-email-confirmation',
   templateUrl: './email-confirmation.component.html',
 })
@@ -39,8 +38,8 @@ export class EmailConfirmationComponent implements OnInit {
   loading = true;
 
   ngOnInit(): void {
-    const token = this.route.snapshot.queryParams['token'];
-    const email = this.route.snapshot.queryParams['email'];
+    const token: string = this.route.snapshot.queryParams['token'];
+    const email: string = this.route.snapshot.queryParams['email'];
     this.authService
       .confirmEmail(token, email)
       .pipe(

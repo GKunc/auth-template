@@ -34,7 +34,7 @@ module.exports = [
   {
     files: ['**/*.ts'],
     rules: {
-      '@angular-eslint/prefer-standalone': 'off',
+      '@angular-eslint/prefer-standalone': 'error',
     },
   },
 ];

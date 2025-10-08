@@ -9,7 +9,6 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  standalone: true,
   imports: [FormsModule],
   selector: 'app-lessons',
   templateUrl: './lessons.component.html',

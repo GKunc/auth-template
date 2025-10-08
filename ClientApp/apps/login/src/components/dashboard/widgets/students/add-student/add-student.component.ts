@@ -6,7 +6,6 @@ import {
   signal,
 } from '@angular/core';
 
-
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { InputGroup } from 'primeng/inputgroup';
@@ -18,15 +17,14 @@ import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 
 @Component({
-  standalone: true,
   imports: [
     CardModule,
     ReactiveFormsModule,
     InputGroup,
     InputGroupAddonModule,
     InputTextModule,
-    ButtonModule
-],
+    ButtonModule,
+  ],
   selector: 'app-add-student',
   templateUrl: './add-student.component.html',
   styles: [
@@ -54,6 +52,7 @@ export class AddStudentComponent {
   constructor() {
     effect(() => this.toggleLoadingState(this.loading()));
   }
+
   addNewStudent(): void {
     this.loading.set(true);
     this.http

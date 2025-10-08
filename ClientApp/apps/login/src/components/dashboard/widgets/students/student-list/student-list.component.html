@@ -4,12 +4,12 @@
     <p-button (click)="addNewStudent()" label="+ Add Student" />
   </div>
 
-  <p-card [class.loader-container]="loading()">
-    @if (loading()) {
+  <p-card [class.loader-container]="studentsResource.isLoading()">
+    @if (studentsResource.isLoading()) {
       <p-progress-spinner ariaLabel="loading" />
     } @else {
     <p-table
-      [value]="students()"
+      [value]="studentsResource.value()"
       selectionMode="single"
       [(selection)]="selectedStudent"
       dataKey="id"

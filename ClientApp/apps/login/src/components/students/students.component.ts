@@ -2,13 +2,12 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  standalone: true,
   imports: [],
   selector: 'app-students',
   templateUrl: './students.component.html',
   providers: [],
 })
-export class StudentsComponennt implements OnInit {
+export class StudentsComponent implements OnInit {
   http: HttpClient = inject(HttpClient);
 
   private readonly _payments = signal([]);
