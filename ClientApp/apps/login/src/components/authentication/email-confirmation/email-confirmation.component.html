@@ -2,15 +2,17 @@
   <section class="flex flex-col items-center gap-4 w-96 pb-6">
     <p-card [style]="{ width: '400px' }">
       <div class="flex items-center justify-center gap-4 mb-4">
-        @if (loading) {
+        @if (emailConfirmationResource.isLoading()) {
         <p-skeleton height="2rem" class="w-full" />
-        } @else { @if (success) {
-        <i class="pi pi-check-circle" style="color: green; font-size: 2rem"></i>
-        <h1>Account activated. You can log in now</h1>
         } @else {
-        <i class="pi pi-times-circle" style="color: red; font-size: 2rem"></i>
-        <h1>Could not active account</h1>
-        } }
+          @if (emailConfirmationResource.status() === 'resolved') {
+            <i class="pi pi-check-circle" style="color: green; font-size: 2rem"></i>
+            <h1>Account activated. You can log in now</h1>
+          } @else {
+            <i class="pi pi-times-circle" style="color: red; font-size: 2rem"></i>
+            <h1>Could not active account</h1>
+          }
+        }
       </div>
       <p-button (click)="goToLoginPage()"
         label="Go to login page"

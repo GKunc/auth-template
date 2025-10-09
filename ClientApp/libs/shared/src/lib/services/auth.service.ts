@@ -4,7 +4,6 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
-import { MessageService } from 'primeng/api';
 import { CustomEncoder } from './custom-ecoder';
 import { SKIP_HTTP_ERRORS_INTERCEPTOR } from '../interceptors/auth.interceptor';
 
@@ -22,15 +21,15 @@ export class AuthService {
     }
   }
 
-  login(credentials: { email: string; password: string }): Observable<any> {
+  login(credentials: { email: string; password: string }): Observable<void> {
     return this.http.post<void>('/api/accounts/login', credentials);
   }
 
-  refreshAccessToken(): Observable<any> {
+  refreshAccessToken(): Observable<AccessTokenResponse> {
     const refreshToken = localStorage.getItem('refreshToken');
     const accessToken = localStorage.getItem('accessToken');
     return this.http
-      .post<any>('/api/token/refresh', {
+      .post<AccessTokenResponse>('/api/token/refresh', {
         refreshToken,
         accessToken,
       })
@@ -52,16 +51,21 @@ export class AuthService {
     this.router.navigate(['login']);
   }
 
-  confirmEmail(token: string, email: string): Observable<any> {
+  confirmEmail(token: string, email: string): Observable<null> {
     let params = new HttpParams({ encoder: new CustomEncoder() });
     params = params.append('token', token);
     params = params.append('email', email);
 
-    return this.http.get('/api/accounts/confirm-email', {
+    return this.http.get<null>('/api/accounts/confirm-email', {
       params,
       context: new HttpContext().set(SKIP_HTTP_ERRORS_INTERCEPTOR, true),
     });
   }
+}
+
+export interface AccessTokenResponse {
+  accessToken: string;
+  refreshToken: string;
 }
 
 export interface LoggedUser {

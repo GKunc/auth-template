@@ -37,12 +37,23 @@ public class StudentsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetStudents()
     {
-       var students = await _userManager.GetUsersInRoleAsync("Student");
-       return Ok(students);
+        var students = await _userManager.GetUsersInRoleAsync("Student");
+        return Ok(students);
+    }
+    
+    [Authorize(Roles = "Administrator,Teacher")]
+    [HttpDelete]
+    public async Task<IActionResult> DeleteStudent([FromBody] UserForRegistrationDto userForRegistration)
+    {
+        var user = await _userManager.FindByEmailAsync(userForRegistration.Email!);
+        if (user == null) 
+            return NotFound("User not found");
+        await _userManager.DeleteAsync(user!);
+        return Ok();
     }
 
     [Authorize(Roles = "Administrator")]
-    [HttpPost("register")]
+    [HttpPost]
     public async Task<IActionResult> Register([FromBody] UserForRegistrationDto userForRegistration)
     {
         if (!ModelState.IsValid)

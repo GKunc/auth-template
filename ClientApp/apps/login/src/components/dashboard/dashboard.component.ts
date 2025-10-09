@@ -17,53 +17,35 @@ export class DashboardComponent {
 
   menuItems: MenuItem[] = [
     {
-      label: 'Home',
-      icon: 'pi pi-plus',
+      label: '',
       items: [
         {
           label: 'Dashboard',
           icon: 'pi pi-home',
-        },
-      ],
-    },
-    {
-      label: 'Students',
-      items: [
-        {
-          label: 'New',
-          icon: 'pi pi-plus',
           command: () => {
-            this.router.navigate(['dashboard/add-student']);
+            this.router.navigate(['dashboard']);
           },
         },
         {
-          label: 'List',
+          label: 'Students',
           icon: 'pi pi-list',
           command: () => {
             this.router.navigate(['dashboard/student-list']);
           },
         },
-      ],
-    },
-    {
-      label: 'Teachers',
-      items: [
         {
-          label: 'New',
-          icon: 'pi pi-plus',
-        },
-        {
-          label: 'List',
+          label: 'Teachers',
           icon: 'pi pi-list',
+          command: () => {
+            this.router.navigate(['dashboard/teacher-list']);
+          },
         },
-      ],
-    },
-    {
-      label: 'Profile',
-      items: [
         {
           label: 'Settings',
           icon: 'pi pi-cog',
+          command: () => {
+            this.router.navigate(['dashboard/settins']);
+          },
         },
         {
           label: 'Logout',

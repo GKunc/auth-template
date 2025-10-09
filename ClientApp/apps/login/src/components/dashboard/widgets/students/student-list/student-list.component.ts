@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { CardModule } from 'primeng/card';
-import { TableModule } from 'primeng/table';
+import { TableModule, TableRowReorderEvent } from 'primeng/table';
 import {
   HttpClient,
   httpResource,
@@ -11,9 +11,11 @@ import { Student } from './student-list.model';
 import { ButtonModule } from 'primeng/button';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { Router } from '@angular/router';
+import { StudentListStore } from './student-list.store';
 
 @Component({
   imports: [CardModule, TableModule, ButtonModule, ProgressSpinnerModule],
+  providers: [StudentListStore],
   selector: 'app-student-list',
   templateUrl: './student-list.component.html',
   styles: [
@@ -33,19 +35,21 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentListComponent {
-  http: HttpClient = inject(HttpClient);
-  router: Router = inject(Router);
-
-  studentsResource: HttpResourceRef<Student[]> = httpResource<Student[]>(
-    () => '/api/students',
-    {
-      defaultValue: [],
-    }
-  );
+  private router: Router = inject(Router);
+  store = inject(StudentListStore);
 
   selectedStudent!: Student;
 
   addNewStudent(): void {
     this.router.navigate(['dashboard/add-student']);
+  }
+
+  editStudent(student: Student): void {
+    this.store.selectStudents(student);
+    this.router.navigate(['dashboard/add-student']);
+  }
+
+  removeStudent(student: Student): void {
+    this.store.removeStudent(student);
   }
 }

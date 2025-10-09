@@ -1,17 +1,15 @@
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '@client-app/shared';
 
 import { ButtonModule } from 'primeng/button';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { Card } from 'primeng/card';
-import { catchError, finalize, throwError } from 'rxjs';
 import { SkeletonModule } from 'primeng/skeleton';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { httpResource, HttpResourceRef } from '@angular/common/http';
 
 @Component({
   imports: [
@@ -28,32 +26,17 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   selector: 'app-email-confirmation',
   templateUrl: './email-confirmation.component.html',
 })
-export class EmailConfirmationComponent implements OnInit {
+export class EmailConfirmationComponent {
   private router: Router = inject(Router);
-  private authService: AuthService = inject(AuthService);
   private route: ActivatedRoute = inject(ActivatedRoute);
-  private destroyedRef: DestroyRef = inject(DestroyRef);
 
-  success = false;
-  loading = true;
-
-  ngOnInit(): void {
-    const token: string = this.route.snapshot.queryParams['token'];
-    const email: string = this.route.snapshot.queryParams['email'];
-    this.authService
-      .confirmEmail(token, email)
-      .pipe(
-        takeUntilDestroyed(this.destroyedRef),
-        catchError((e) => {
-          this.success = false;
-          return throwError(() => e);
-        }),
-        finalize(() => (this.loading = false))
-      )
-      .subscribe(() => {
-        this.success = true;
-      });
-  }
+  emailConfirmationResource: HttpResourceRef<void> = httpResource(() => ({
+    url: '/api/accounts/confirm-email',
+    params: {
+      token: this.route.snapshot.queryParams['token'],
+      email: this.route.snapshot.queryParams['email'],
+    },
+  }));
 
   goToLoginPage(): void {
     this.router.navigate(['login']);

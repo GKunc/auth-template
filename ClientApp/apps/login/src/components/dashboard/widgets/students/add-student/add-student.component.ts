@@ -6,7 +6,12 @@ import {
   signal,
 } from '@angular/core';
 
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { InputGroup } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
@@ -43,10 +48,20 @@ export class AddStudentComponent {
   loading: WritableSignal<boolean> = signal(false);
 
   newStudentForm: FormGroup = new FormGroup({
-    email: new FormControl(null),
-    phoneNumber: new FormControl(null),
-    firstName: new FormControl(null),
-    lastName: new FormControl(null),
+    email: new FormControl(null, [Validators.required, Validators.email]),
+    phoneNumber: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(9),
+      Validators.maxLength(9),
+    ]),
+    firstName: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
+    lastName: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
   });
 
   constructor() {
@@ -56,10 +71,10 @@ export class AddStudentComponent {
   addNewStudent(): void {
     this.loading.set(true);
     this.http
-      .post('/api/students/register', this.newStudentForm.value)
+      .post('/api/students', this.newStudentForm.value)
       .pipe(finalize(() => this.loading.set(false)))
-      .subscribe((result) => {
-        console.log(result);
+      .subscribe(() => {
+        this.router.navigate(['/dashboard/student-list']);
       });
   }
 

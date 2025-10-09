@@ -38,7 +38,7 @@ public class TeachersController : ControllerBase
     }
 
     [Authorize(Roles = "Administrator")]
-    [HttpPost("register")]
+    [HttpPost]
     public async Task<IActionResult> Register([FromBody] UserForRegistrationDto userForRegistration)
     {
         if (!ModelState.IsValid)

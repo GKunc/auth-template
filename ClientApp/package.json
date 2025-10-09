@@ -19,6 +19,7 @@
     "@angular/router": "20.3.3",
     "@ng-icons/core": "^25.1.0",
     "@ng-icons/lucide": "^29.10.0",
+    "@ngrx/signals": "^20.0.1",
     "@nrwl/nx-cloud": "19.1.0",
     "@primeng/themes": "^20.2.0",
     "class-variance-authority": "^0.7.0",

@@ -16,7 +16,7 @@ import { loggingInterceptor } from '@client-app/shared';
 import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { provideIcons } from '@ng-icons/core';
-import { lucideChevronRight, lucideLogIn } from '@ng-icons/lucide';
+import { lucideChevronRight, lucideLogIn, lucideTrash } from '@ng-icons/lucide';
 import { Observable } from 'rxjs';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
@@ -48,6 +48,7 @@ export const appConfig: ApplicationConfig = {
     provideIcons({
       lucideChevronRight,
       lucideLogIn,
+      lucideTrash,
     }),
     provideAnimationsAsync(),
     providePrimeNG({
@@ -56,8 +57,8 @@ export const appConfig: ApplicationConfig = {
         options: {
           prefix: 'p',
           darkModeSelector: 'system',
-          cssLayer: false
-        }
+          cssLayer: false,
+        },
       },
     }),
     provideZoneChangeDetection({ eventCoalescing: true }),

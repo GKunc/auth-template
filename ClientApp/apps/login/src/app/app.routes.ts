@@ -40,6 +40,13 @@ export const appRoutes: Route[] = [
                 '../components/dashboard/widgets/students/student-list/student-list.component'
               ).then((c) => c.StudentListComponent),
           },
+          {
+            path: '**',
+            loadComponent: () =>
+              import(
+                '../components/dashboard/widgets/not-found/not-found.component'
+              ).then((c) => c.NotFoundComponent),
+          },
         ],
       },
       {
@@ -47,13 +54,6 @@ export const appRoutes: Route[] = [
         loadComponent: () =>
           import('../components/lessons/lessons.component').then(
             (c) => c.LessonsComponennt
-          ),
-      },
-      {
-        path: 'students',
-        loadComponent: () =>
-          import('../components/students/students.component').then(
-            (c) => c.StudentsComponent
           ),
       },
     ],
