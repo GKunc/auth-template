@@ -1,17 +1,18 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnDestroy,
+} from '@angular/core';
 
 import { CardModule } from 'primeng/card';
-import { TableModule, TableRowReorderEvent } from 'primeng/table';
-import {
-  HttpClient,
-  httpResource,
-  HttpResourceRef,
-} from '@angular/common/http';
+import { TableModule } from 'primeng/table';
 import { Student } from './student-list.model';
 import { ButtonModule } from 'primeng/button';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { Router } from '@angular/router';
 import { StudentListStore } from './student-list.store';
+import { AddStudentComponent } from '../add-student/add-student.component';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   imports: [CardModule, TableModule, ButtonModule, ProgressSpinnerModule],
@@ -34,22 +35,44 @@ import { StudentListStore } from './student-list.store';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StudentListComponent {
-  private router: Router = inject(Router);
+export class StudentListComponent implements OnDestroy {
   store = inject(StudentListStore);
-
   selectedStudent!: Student;
+  private dialogService: DialogService = inject(DialogService);
+  private ref: DynamicDialogRef<AddStudentComponent> | null = null;
 
   addNewStudent(): void {
-    this.router.navigate(['dashboard/add-student']);
+    this.openStudentDialog();
   }
 
   editStudent(student: Student): void {
     this.store.selectStudents(student);
-    this.router.navigate(['dashboard/add-student']);
+    this.openStudentDialog(student);
   }
 
-  removeStudent(student: Student): void {
-    this.store.removeStudent(student);
+  removeStudent(studentId: string): void {
+    this.store.removeStudent(studentId);
+  }
+
+  ngOnDestroy(): void {
+    this.ref?.destroy();
+  }
+
+  private openStudentDialog(student?: Student): void {
+    this.ref = this.dialogService.open(AddStudentComponent, {
+      inputValues: {
+        student,
+      },
+      header: student ? 'Edit Student' : 'Add New Student',
+      width: '50vw',
+      modal: true,
+      closable: true,
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw',
+      },
+    });
+
+    this.ref?.onClose.subscribe(() => this.store.studentsResource()?.reload());
   }
 }

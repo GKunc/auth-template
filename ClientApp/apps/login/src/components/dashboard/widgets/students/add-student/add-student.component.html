@@ -1,54 +1,50 @@
-<div class="w-full h-full p-4">
-  <h1 class="text-3xl font-bold mb-4">Add new student</h1>
-
-  <p-card>
-    <form [formGroup]="newStudentForm" class="flex flex-col gap-4 mb-4">
-      <p-inputgroup>
-        <input
-          pInputText
-          [fluid]="true"
-          formControlName="firstName"
-          type="text"
-          placeholder="First Name"
-        />
-      </p-inputgroup>
-
-      <p-inputgroup>
-        <input
-          pInputText
-          [fluid]="true"
-          formControlName="lastName"
-          type="text"
-          placeholder="Last Name"
-        />
-      </p-inputgroup>
-
-      <p-inputgroup>
-        <input
-          pInputText
-          class="w-full"
-          formControlName="email"
-          type="email"
-          placeholder="Email"
-          email
-        />
-      </p-inputgroup>
-
-      <p-inputgroup>
-        <input
-          pInputText
-          class="w-full"
-          formControlName="phoneNumber"
-          type="tel"
-          placeholder="Phone"
-        />
-      </p-inputgroup>
-      <p-button
-        (click)="addNewStudent()"
-        label="Add new student"
+<div class="w-full h-full">
+  <form [formGroup]="newStudentForm" class="flex flex-col gap-4">
+    <p-inputgroup>
+      <input
         [fluid]="true"
-        [loading]="loading()"
+        formControlName="firstName"
+        pInputText
+        placeholder="First Name"
+        type="text"
       />
-    </form>
-  </p-card>
+    </p-inputgroup>
+
+    <p-inputgroup>
+      <input
+        [fluid]="true"
+        formControlName="lastName"
+        pInputText
+        placeholder="Last Name"
+        type="text"
+      />
+    </p-inputgroup>
+
+    <p-inputgroup>
+      <input
+        class="w-full"
+        email
+        formControlName="email"
+        pInputText
+        placeholder="Email"
+        type="email"
+      />
+    </p-inputgroup>
+
+    <p-inputgroup>
+      <input
+        class="w-full"
+        formControlName="phoneNumber"
+        pInputText
+        placeholder="Phone"
+        type="tel"
+      />
+    </p-inputgroup>
+    <p-button
+      (click)="saveStudent()"
+      [fluid]="true"
+      [label]="student() ? 'Edit Student' : 'Add new student'"
+      [loading]="loading()"
+    />
+  </form>
 </div>

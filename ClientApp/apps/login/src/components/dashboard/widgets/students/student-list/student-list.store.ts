@@ -40,10 +40,10 @@ export const StudentListStore = signalStore(
     selectStudents(selectedStudent: Student): void {
       patchState(store, { selectedStudent });
     },
-    removeStudent: rxMethod<Student>(
+    removeStudent: rxMethod<string>(
       pipe(
-        switchMap((student) =>
-          studentListService.removeStudent(student).pipe(
+        switchMap((studentId) =>
+          studentListService.removeStudent(studentId).pipe(
             tap(() => {
               store.studentsResource()?.reload();
             }),

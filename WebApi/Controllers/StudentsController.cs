@@ -42,16 +42,37 @@ public class StudentsController : ControllerBase
     }
     
     [Authorize(Roles = "Administrator,Teacher")]
-    [HttpDelete]
-    public async Task<IActionResult> DeleteStudent([FromBody] UserForRegistrationDto userForRegistration)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteStudent([FromRoute] string id)
     {
-        var user = await _userManager.FindByEmailAsync(userForRegistration.Email!);
+        var user = await _userManager.FindByIdAsync(id);
         if (user == null) 
             return NotFound("User not found");
-        await _userManager.DeleteAsync(user!);
+        await _userManager.DeleteAsync(user);
         return Ok();
     }
 
+    [Authorize(Roles = "Administrator")]
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateStudent([FromRoute] string id, [FromBody] UserForRegistrationDto userForUpdate)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest();
+
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+            return NotFound("User not found");
+
+        _mapper.Map(userForUpdate, user);
+        var result = await _userManager.UpdateAsync(user);
+
+        if (result.Succeeded) return Ok();
+        
+        var errors = result.Errors.Select(e => e.Description);
+        return BadRequest(new RegistrationResponseDto { Errors = errors });
+
+    }
+    
     [Authorize(Roles = "Administrator")]
     [HttpPost]
     public async Task<IActionResult> Register([FromBody] UserForRegistrationDto userForRegistration)

@@ -12,22 +12,25 @@ import {
   provideHttpClient,
   withInterceptors,
 } from '@angular/common/http';
-import { loggingInterceptor } from '@client-app/shared';
-import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
-import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
+import { AuthService, loggingInterceptor } from '@client-app/shared';
+import {
+  GoogleLoginProvider,
+  SocialAuthServiceConfig,
+} from '@abacritt/angularx-social-login';
 import { provideIcons } from '@ng-icons/core';
 import { lucideChevronRight, lucideLogIn, lucideTrash } from '@ng-icons/lucide';
 import { Observable } from 'rxjs';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
-import { AuthService } from '@client-app/shared';
 import { MessageService } from 'primeng/api';
 import { MyPreset } from './ng-prime.preset';
+import { DialogService } from 'primeng/dynamicdialog';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     AuthService,
     MessageService,
+    DialogService,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

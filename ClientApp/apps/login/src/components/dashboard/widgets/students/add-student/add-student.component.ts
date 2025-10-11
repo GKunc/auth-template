@@ -1,9 +1,10 @@
 import {
   Component,
-  WritableSignal,
   effect,
   inject,
+  input,
   signal,
+  WritableSignal,
 } from '@angular/core';
 
 import {
@@ -18,8 +19,10 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
+import { Student } from '../student-list/student-list.model';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { StudentListService } from '../student-list/student-list.service';
 
 @Component({
   imports: [
@@ -42,45 +45,67 @@ import { finalize } from 'rxjs';
   ],
 })
 export class AddStudentComponent {
-  http: HttpClient = inject(HttpClient);
-  router: Router = inject(Router);
-
+  student = input<Student>();
   loading: WritableSignal<boolean> = signal(false);
-
   newStudentForm: FormGroup = new FormGroup({
-    email: new FormControl(null, [Validators.required, Validators.email]),
-    phoneNumber: new FormControl(null, [
+    firstName: new FormControl(this.student()?.firstName, [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
+    lastName: new FormControl(this.student()?.lastName, [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
+    email: new FormControl(this.student()?.email, [
+      Validators.required,
+      Validators.email,
+    ]),
+    phoneNumber: new FormControl(this.student()?.phoneNumber, [
       Validators.required,
       Validators.minLength(9),
       Validators.maxLength(9),
     ]),
-    firstName: new FormControl(null, [
-      Validators.required,
-      Validators.minLength(3),
-    ]),
-    lastName: new FormControl(null, [
-      Validators.required,
-      Validators.minLength(3),
-    ]),
   });
 
+  private http: HttpClient = inject(HttpClient);
+  private ref: DynamicDialogRef = inject(DynamicDialogRef);
+  private studentService: StudentListService = inject(StudentListService);
+
   constructor() {
-    effect(() => this.toggleLoadingState(this.loading()));
+    effect(() => {
+      this.toggleLoadingState(this.loading());
+      this.newStudentForm.setValue({
+        firstName: this.student()?.firstName,
+        lastName: this.student()?.lastName,
+        email: this.student()?.email,
+        phoneNumber: this.student()?.phoneNumber,
+      });
+    });
   }
 
-  addNewStudent(): void {
+  saveStudent(): void {
     this.loading.set(true);
-    this.http
-      .post('/api/students', this.newStudentForm.value)
-      .pipe(finalize(() => this.loading.set(false)))
-      .subscribe(() => {
-        this.router.navigate(['/dashboard/student-list']);
-      });
+    const studentData = this.newStudentForm?.value;
+    if (this.student() && this.student()?.id) {
+      this.studentService
+        .updateStudent(this.student()!.id, studentData)
+        .pipe(finalize(() => this.loading.set(false)))
+        .subscribe(() => {
+          this.ref.close();
+        });
+    } else {
+      this.studentService
+        .addStudent(studentData)
+        .pipe(finalize(() => this.loading.set(false)))
+        .subscribe(() => {
+          this.ref.close();
+        });
+    }
   }
 
   private toggleLoadingState(disable: boolean) {
-    Object.keys(this.newStudentForm.controls).forEach((key) => {
-      const control = this.newStudentForm.get(key);
+    Object.keys(this.newStudentForm?.controls).forEach((key) => {
+      const control = this.newStudentForm?.get(key);
       if (disable) {
         control?.disable();
       } else {
