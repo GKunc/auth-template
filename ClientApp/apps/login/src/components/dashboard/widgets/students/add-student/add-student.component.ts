@@ -20,9 +20,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { HttpClient } from '@angular/common/http';
 import { finalize } from 'rxjs';
-import { Student } from '../student-list/student-list.model';
+import { Student } from '../students-list/student-list.model';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { StudentListService } from '../student-list/student-list.service';
+import { StudentListService } from '../students-list/student-list.service';
 
 @Component({
   imports: [

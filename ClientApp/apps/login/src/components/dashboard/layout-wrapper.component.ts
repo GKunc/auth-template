@@ -7,11 +7,11 @@ import { AuthService } from '@client-app/shared';
 
 @Component({
   imports: [MenuModule, RouterModule],
-  selector: 'app-dashboard',
-  styleUrl: './dashboard.component.less',
-  templateUrl: './dashboard.component.html',
+  selector: 'app-layout-wrapper',
+  styleUrl: './layout-wrapper.component.less',
+  templateUrl: './layout-wrapper.component.html',
 })
-export class DashboardComponent {
+export class LayoutWrapperComponent {
   private router: Router = inject(Router);
   private authService: AuthService = inject(AuthService);
 
@@ -23,28 +23,28 @@ export class DashboardComponent {
           label: 'Dashboard',
           icon: 'pi pi-home',
           command: () => {
-            this.router.navigate(['dashboard']);
+            this.router.navigate(['dashboard/summary']);
           },
         },
         {
           label: 'Students',
           icon: 'pi pi-list',
           command: () => {
-            this.router.navigate(['dashboard/student-list']);
+            this.router.navigate(['dashboard/students-list']);
           },
         },
         {
           label: 'Teachers',
           icon: 'pi pi-list',
           command: () => {
-            this.router.navigate(['dashboard/teacher-list']);
+            this.router.navigate(['dashboard/teachers-list']);
           },
         },
         {
           label: 'Settings',
           icon: 'pi pi-cog',
           command: () => {
-            this.router.navigate(['dashboard/settins']);
+            this.router.navigate(['dashboard/settings']);
           },
         },
         {

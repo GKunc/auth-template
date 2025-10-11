@@ -22,23 +22,37 @@ export const appRoutes: Route[] = [
       {
         path: 'dashboard',
         loadComponent: () =>
-          import('../components/dashboard/dashboard.component').then(
-            (c) => c.DashboardComponent
+          import('../components/dashboard/layout-wrapper.component').then(
+            (c) => c.LayoutWrapperComponent
           ),
         children: [
           {
-            path: 'add-student',
+            path: 'summary',
             loadComponent: () =>
               import(
-                '../components/dashboard/widgets/students/add-student/add-student.component'
-              ).then((c) => c.AddStudentComponent),
+                '../components/dashboard/widgets/summary/summary.component'
+              ).then((c) => c.SummaryComponent),
           },
           {
-            path: 'student-list',
+            path: 'students-list',
             loadComponent: () =>
               import(
-                '../components/dashboard/widgets/students/student-list/student-list.component'
+                '../components/dashboard/widgets/students/students-list/student-list.component'
               ).then((c) => c.StudentListComponent),
+          },
+          {
+            path: 'teachers-list',
+            loadComponent: () =>
+              import(
+                '../components/dashboard/widgets/teachers/teachers-list/teachers-list.component'
+              ).then((c) => c.TeachersListComponent),
+          },
+          {
+            path: 'settings',
+            loadComponent: () =>
+              import(
+                '../components/dashboard/widgets/settings/settings.component'
+              ).then((c) => c.SettingsComponent),
           },
           {
             path: '**',
