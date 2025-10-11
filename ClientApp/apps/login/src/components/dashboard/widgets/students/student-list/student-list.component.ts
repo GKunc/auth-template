@@ -13,6 +13,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { StudentListStore } from './student-list.store';
 import { AddStudentComponent } from '../add-student/add-student.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   imports: [CardModule, TableModule, ButtonModule, ProgressSpinnerModule],
@@ -51,7 +52,19 @@ export class StudentListComponent implements OnDestroy {
   }
 
   removeStudent(studentId: string): void {
-    this.store.removeStudent(studentId);
+    const ref = this.dialogService.open(ConfirmDialogComponent, {
+      data: { message: 'You are about to delete this student?' },
+      header: 'Delete student',
+      width: '350px',
+      modal: true,
+      closable: true,
+    });
+
+    ref?.onClose.subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.store.removeStudent(studentId);
+      }
+    });
   }
 
   ngOnDestroy(): void {
