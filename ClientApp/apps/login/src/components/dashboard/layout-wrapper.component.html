@@ -1,4 +1,6 @@
 <div class="flex h-svh">
-  <p-menu class="h-full" [model]="menuItems" />
-  <router-outlet />
+  <p-menu [model]="menuItems" class="h-full" />
+  <div class="w-full h-full p-4 flex flex-col">
+    <router-outlet />
+  </div>
 </div>

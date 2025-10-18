@@ -17,15 +17,7 @@ public class StudentsController : ControllerBase
     private readonly UserManager<User> _userManager;
     private readonly IEmailService _emailService;
     private readonly IMapper _mapper;
-    private static Random random = new Random();
 
-    public static string RandomString(int length)
-    {
-        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        return "a1!" + new string(Enumerable.Repeat(chars, length)
-            .Select(s => s[random.Next(s.Length)]).ToArray());
-    }
-    
     public StudentsController(UserManager<User> userManager, IEmailService emailService,IMapper mapper)
     {
         _userManager = userManager;
@@ -81,8 +73,7 @@ public class StudentsController : ControllerBase
             return BadRequest();
 
         var user = _mapper.Map<User>(userForRegistration);
-        var password = RandomString(10);
-        
+        var password = PasswordGenerator.GeneratePassword(10, 1);
         var result = await _userManager.CreateAsync(user, password);
         if (!result.Succeeded)
         {
@@ -99,9 +90,7 @@ public class StudentsController : ControllerBase
         var callback = QueryHelpers.AddQueryString("http://localhost:4400/email-confirmation", param);
         var message = new EmailMessage([user.Email], "You have created and account", callback + ", password: " + password, null);
         await _emailService.SendEmailAsync(message);
-        
         await _userManager.AddToRoleAsync(user, "Student");
-
         return StatusCode(201);
     }
 }

@@ -37,7 +37,7 @@ export const StudentListStore = signalStore(
       });
       patchState(store, { studentsResource });
     },
-    selectStudents(selectedStudent: Student): void {
+    selectStudent(selectedStudent: Student): void {
       patchState(store, { selectedStudent });
     },
     removeStudent: rxMethod<string>(

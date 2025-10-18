@@ -28,14 +28,14 @@ export class LayoutWrapperComponent {
         },
         {
           label: 'Students',
-          icon: 'pi pi-list',
+          icon: 'pi pi-graduation-cap',
           command: () => {
             this.router.navigate(['dashboard/students-list']);
           },
         },
         {
           label: 'Teachers',
-          icon: 'pi pi-list',
+          icon: 'pi pi-user',
           command: () => {
             this.router.navigate(['dashboard/teachers-list']);
           },

@@ -19,9 +19,9 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { finalize } from 'rxjs';
-import { Student } from '../students-list/student-list.model';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { StudentListService } from '../students-list/student-list.service';
+import { Teacher } from '../teachers-list/teachers-list.model';
+import { TeachersListService } from '../teachers-list/teachers-list.service';
 
 @Component({
   imports: [
@@ -32,8 +32,8 @@ import { StudentListService } from '../students-list/student-list.service';
     InputTextModule,
     ButtonModule,
   ],
-  selector: 'app-add-student',
-  templateUrl: './add-student.component.html',
+  selector: 'app-add-teacher',
+  templateUrl: './add-teacher.component.html',
   styles: [
     `
       :host {
@@ -43,23 +43,23 @@ import { StudentListService } from '../students-list/student-list.service';
     `,
   ],
 })
-export class AddStudentComponent {
-  student = input<Student>();
+export class AddTeacherComponent {
+  teacher = input<Teacher>();
   loading: WritableSignal<boolean> = signal(false);
-  newStudentForm: FormGroup = new FormGroup({
-    firstName: new FormControl(this.student()?.firstName, [
+  newTeacherForm: FormGroup = new FormGroup({
+    firstName: new FormControl(this.teacher()?.firstName, [
       Validators.required,
       Validators.minLength(3),
     ]),
-    lastName: new FormControl(this.student()?.lastName, [
+    lastName: new FormControl(this.teacher()?.lastName, [
       Validators.required,
       Validators.minLength(3),
     ]),
-    email: new FormControl(this.student()?.email, [
+    email: new FormControl(this.teacher()?.email, [
       Validators.required,
       Validators.email,
     ]),
-    phoneNumber: new FormControl(this.student()?.phoneNumber, [
+    phoneNumber: new FormControl(this.teacher()?.phoneNumber, [
       Validators.required,
       Validators.minLength(9),
       Validators.maxLength(9),
@@ -67,33 +67,33 @@ export class AddStudentComponent {
   });
 
   private ref: DynamicDialogRef = inject(DynamicDialogRef);
-  private studentService: StudentListService = inject(StudentListService);
+  private teacherService: TeachersListService = inject(TeachersListService);
 
   constructor() {
     effect(() => {
       this.toggleLoadingState(this.loading());
-      this.newStudentForm.setValue({
-        firstName: this.student()?.firstName,
-        lastName: this.student()?.lastName,
-        email: this.student()?.email,
-        phoneNumber: this.student()?.phoneNumber,
+      this.newTeacherForm.setValue({
+        firstName: this.teacher()?.firstName,
+        lastName: this.teacher()?.lastName,
+        email: this.teacher()?.email,
+        phoneNumber: this.teacher()?.phoneNumber,
       });
     });
   }
 
-  saveStudent(): void {
+  saveTeacher(): void {
     this.loading.set(true);
-    const studentData = this.newStudentForm?.value;
-    if (this.student() && this.student()?.id) {
-      this.studentService
-        .updateStudent(this.student()!.id, studentData)
+    const data = this.newTeacherForm?.value;
+    if (this.teacher() && this.teacher()?.id) {
+      this.teacherService
+        .updateTeacher(this.teacher()!.id, data)
         .pipe(finalize(() => this.loading.set(false)))
         .subscribe(() => {
           this.ref.close();
         });
     } else {
-      this.studentService
-        .addStudent(studentData)
+      this.teacherService
+        .addTeacher(data)
         .pipe(finalize(() => this.loading.set(false)))
         .subscribe(() => {
           this.ref.close();
@@ -102,8 +102,8 @@ export class AddStudentComponent {
   }
 
   private toggleLoadingState(disable: boolean) {
-    Object.keys(this.newStudentForm?.controls).forEach((key) => {
-      const control = this.newStudentForm?.get(key);
+    Object.keys(this.newTeacherForm?.controls).forEach((key) => {
+      const control = this.newTeacherForm?.get(key);
       if (disable) {
         control?.disable();
       } else {

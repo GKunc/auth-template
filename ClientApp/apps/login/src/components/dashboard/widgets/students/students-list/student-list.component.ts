@@ -46,7 +46,7 @@ export class StudentListComponent implements OnDestroy {
   }
 
   editStudent(student: Student): void {
-    this.store.selectStudents(student);
+    this.store.selectStudent(student);
     this.openStudentDialog(student);
   }
 

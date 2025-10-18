@@ -1,7 +1,7 @@
 import {
   ApplicationConfig,
   inject,
-  provideZoneChangeDetection,
+  provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
@@ -64,7 +64,7 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideZonelessChangeDetection(),
     provideRouter(appRoutes),
     provideHttpClient(
       withInterceptors([

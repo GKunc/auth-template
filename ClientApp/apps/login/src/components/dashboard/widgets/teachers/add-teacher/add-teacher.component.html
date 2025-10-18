@@ -1,0 +1,50 @@
+<div class="w-full h-full">
+  <form [formGroup]="newTeacherForm" class="flex flex-col gap-4">
+    <p-inputgroup>
+      <input
+        [fluid]="true"
+        formControlName="firstName"
+        pInputText
+        placeholder="First Name"
+        type="text"
+      />
+    </p-inputgroup>
+
+    <p-inputgroup>
+      <input
+        [fluid]="true"
+        formControlName="lastName"
+        pInputText
+        placeholder="Last Name"
+        type="text"
+      />
+    </p-inputgroup>
+
+    <p-inputgroup>
+      <input
+        class="w-full"
+        email
+        formControlName="email"
+        pInputText
+        placeholder="Email"
+        type="email"
+      />
+    </p-inputgroup>
+
+    <p-inputgroup>
+      <input
+        class="w-full"
+        formControlName="phoneNumber"
+        pInputText
+        placeholder="Phone"
+        type="tel"
+      />
+    </p-inputgroup>
+    <p-button
+      (click)="saveTeacher()"
+      [fluid]="true"
+      [label]="teacher() ? 'Edit Teacher' : 'Add new teacher'"
+      [loading]="loading()"
+    />
+  </form>
+</div>

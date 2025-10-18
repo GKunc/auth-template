@@ -1,1 +1,49 @@
-<h1>Teachers List</h1>
+<div class="h-full flex flex-col">
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="text-3xl font-bold">Teachers</h1>
+    <p-button (click)="addNewTeacher()" label="+ Add Teacher" />
+  </div>
+
+  <p-card [class.loader-container]="store.isLoading()" class="flex-1">
+    @if (store.isLoading()) {
+      <p-progress-spinner ariaLabel="loading" />
+    } @else {
+      <p-table
+        [(selection)]="selectedTeacher"
+        [resizableColumns]="true"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [value]="store.teachers() ?? []"
+        dataKey="id"
+        selectionMode="single"
+      >
+        <ng-template #header>
+          <tr>
+            <th>Confirmed</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-student>
+          <tr [pSelectableRow]="student">
+            <td>{{ student.emailConfirmed ? 'Yes' : 'No' }}</td>
+            <td>{{ student.firstName }}</td>
+            <td>{{ student.lastName }}</td>
+            <td>{{ student.email }}</td>
+            <td>{{ student.phoneNumber }}</td>
+            <td class="flex gap-2">
+              <button (click)="editTeacher(student)">
+                <i class="pi pi-pencil"></i>
+              </button>
+              <button (click)="removeTeacher(student.id)">
+                <i class="pi pi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    }
+  </p-card>
+</div>

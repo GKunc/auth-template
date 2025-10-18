@@ -1,1 +1,29 @@
-<h1>Dashboard</h1>
+<p-fluid class="card flex flex-wrap gap-4 p-4">
+  <div class="flex-auto">
+    <p-floatlabel variant="on">
+      <p-input-number [(ngModel)]="cols" inputId="cols" size="small" />
+      <label for="cols">Number of Cols</label>
+    </p-floatlabel>
+  </div>
+  <div class="flex-auto">
+    <p-floatlabel variant="on">
+      <p-input-number [(ngModel)]="colsWidth" inputId="cols" size="small" />
+      <label for="cols">Cols Width (px)</label>
+    </p-floatlabel>
+  </div>
+
+  <div class="flex-auto">
+    <p-floatlabel variant="on">
+      <p-input-number [(ngModel)]="rows" inputId="rows" size="small" />
+      <label for="rows">Numer of Rows</label>
+    </p-floatlabel>
+  </div>
+  <div class="flex-auto">
+    <p-floatlabel variant="on">
+      <p-input-number [(ngModel)]="rowsHeight" inputId="rows" size="small" />
+      <label for="rows">Rows Height (px)</label>
+    </p-floatlabel>
+  </div>
+</p-fluid>
+<p-divider />
+<app-drag-item [colsWidth]="colsWidth()" [cols]="cols()" [items]="items" [rowsHeight]="rowsHeight()" [rows]="rows()" />
