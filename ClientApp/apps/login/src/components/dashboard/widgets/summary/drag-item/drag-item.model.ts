@@ -2,7 +2,7 @@ export interface DraggableItem {
   id: string;
   name: string;
   layout?: ItemLayout;
-  children: DraggableItem[];
+  children?: DraggableItem[];
 }
 
 export interface ItemLayout {
@@ -10,4 +10,9 @@ export interface ItemLayout {
   rowEnd: number;
   colStart: number;
   colEnd: number;
+}
+
+export interface GridPosition {
+  row: number;
+  col: number;
 }

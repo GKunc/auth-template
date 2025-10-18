@@ -3,58 +3,49 @@
   (cdkDropListDropped)="onDrop($event)"
   [cdkDropListData]="items()"
   [cdkDropListSortingDisabled]="true"
-  [style.display]="'grid'"
-  [style.gridTemplateColumns]="'repeat(' + cols() + ', ' + computedColWidth() + 'px)'"
-  [style.gridTemplateRows]="'repeat(' + rows() + ', ' + computedRowHeight() + 'px)'"
+  [class.nested-grid]="isNested()"
   cdkDropList
   class="grid-container"
 >
   @for (item of items(); track item.id) {
     <div
-      (cdkDragEnded)="onDragEnded()"
-      (cdkDragMoved)="onDragMoved($event)"
+      (cdkDragDropped)="onDrop($event)"
+      (cdkDragMoved)="onDragMoved($event, item)"
       (cdkDragStarted)="onDragStarted()"
       [attr.data-item-id]="item.id"
       [cdkDragBoundary]="gridContainer"
       [cdkDragData]="item"
-      [class.will-move]="itemsToMove.has(item)"
-      [style.gridArea]="(item.layout?.rowStart ?? 1) + ' / ' + (item.layout?.colStart ?? 1) + ' / ' + (item.layout?.rowEnd ?? 2) + ' / ' + (item.layout?.colEnd ?? 2)"
+      [class.colliding]="collidingItems().has(item)"
+      [class.has-children]="!!item.children"
+      [style.cursor]="collidingItems().has(item) ? 'not-allowed' : 'grab'"
+      [style.grid-area]="(item.layout?.rowStart ?? 1) + ' / ' + (item.layout?.colStart ?? 1) + ' / ' + (item.layout?.rowEnd ?? 2) + ' / ' + (item.layout?.colEnd ?? 2)"
       [style.position]="'relative'"
       [style.transform]="'none'"
       cdkDrag
       class="grid-item"
-      noopDragPreview
     >
       <div class="item-content">
+        <div class="item-header">
+          <span>{{ item.name }}</span>
+          <div cdkDragHandle class="drag-handle">
+            <svg viewBox="0 0 24 24" width="24">
+              <path
+                d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"
+              />
+            </svg>
+          </div>
+        </div>
         @if (item.children) {
-          <app-drag-item
-            [colsWidth]="computedColWidth()"
-            [cols]="cols()"
-            [items]="item.children"
-            [maxColWidth]="maxColWidth()"
-            [maxRowHeight]="maxRowHeight()"
-            [minColWidth]="minColWidth()"
-            [minRowHeight]="minRowHeight()"
-            [rowsHeight]="computedRowHeight()"
-            [rows]="rows()"
-          />
-        } @else {
-          <div class="item-header">
-            <span>{{ item.name }}</span>
-            <div cdkDragHandle class="drag-handle">
-              <svg viewBox="0 0 24 24" width="24">
-                <path
-                  d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"
-                />
-              </svg>
-            </div>
+          <div class="nested-grid-wrapper">
+            <app-drag-item
+              [isNested]="true"
+              [itemsInput]="item.children"
+            />
           </div>
         }
+        <div (mousedown)="startResize($event, item)"
+             class="resize-handle"></div>
       </div>
-
-      <div (mousedown)="onResize('col', $event, item)" class="resize-handle resize-e"></div>
-      <div (mousedown)="onResize('row', $event, item)" class="resize-handle resize-s"></div>
-      <div (mousedown)="onResize('both', $event, item)" class="resize-handle resize-se"></div>
     </div>
   }
 </div>

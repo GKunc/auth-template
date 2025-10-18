@@ -1,29 +1,8 @@
-<p-fluid class="card flex flex-wrap gap-4 p-4">
-  <div class="flex-auto">
-    <p-floatlabel variant="on">
-      <p-input-number [(ngModel)]="cols" inputId="cols" size="small" />
-      <label for="cols">Number of Cols</label>
-    </p-floatlabel>
-  </div>
-  <div class="flex-auto">
-    <p-floatlabel variant="on">
-      <p-input-number [(ngModel)]="colsWidth" inputId="cols" size="small" />
-      <label for="cols">Cols Width (px)</label>
-    </p-floatlabel>
-  </div>
+<div class="card p-4">
+  <h2>Fixed 10x10 Grid Dashboard</h2>
+  <p>Drag and resize items within the grid. Items cannot be moved or resized outside grid bounds.</p>
+</div>
 
-  <div class="flex-auto">
-    <p-floatlabel variant="on">
-      <p-input-number [(ngModel)]="rows" inputId="rows" size="small" />
-      <label for="rows">Numer of Rows</label>
-    </p-floatlabel>
-  </div>
-  <div class="flex-auto">
-    <p-floatlabel variant="on">
-      <p-input-number [(ngModel)]="rowsHeight" inputId="rows" size="small" />
-      <label for="rows">Rows Height (px)</label>
-    </p-floatlabel>
-  </div>
-</p-fluid>
 <p-divider />
-<app-drag-item [colsWidth]="colsWidth()" [cols]="cols()" [items]="items" [rowsHeight]="rowsHeight()" [rows]="rows()" />
+
+<app-drag-item [itemsInput]="items" />
